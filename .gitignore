@@ -43,3 +43,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# JDK installations (should not be in repo)
+/android/app/oracleJdk-*/
+**/oracleJdk-*/
