@@ -54,9 +54,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error playing audio: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error playing audio: $e')));
       }
     }
   }
@@ -86,9 +86,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       await notesController.deleteNote(widget.note.id);
       if (mounted) {
         Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Note deleted')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Note deleted')));
       }
     }
   }
@@ -128,10 +128,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               controller.toggleLike(currentNote.id);
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: _deleteNote,
-          ),
+          IconButton(icon: const Icon(Icons.delete), onPressed: _deleteNote),
         ],
       ),
       body: SingleChildScrollView(
@@ -142,10 +139,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
             // Date/Time
             Text(
               DateFormatter.formatFullDateTime(currentNote.createdAt),
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-              ),
+              style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
 
             const SizedBox(height: 24),
@@ -153,10 +147,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
             // Transcript
             const Text(
               'Transcript:',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             Container(
@@ -179,10 +170,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
             // Audio Player
             const Text(
               'Audio:',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             Card(
@@ -199,7 +187,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                             min: 0,
                             max: _duration.inSeconds.toDouble(),
                             onChanged: (value) async {
-                              await _audioPlayer.seek(Duration(seconds: value.toInt()));
+                              await _audioPlayer.seek(
+                                Duration(seconds: value.toInt()),
+                              );
                             },
                           ),
                           Row(
@@ -238,4 +228,3 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     );
   }
 }
-

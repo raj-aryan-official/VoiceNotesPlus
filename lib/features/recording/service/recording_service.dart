@@ -17,12 +17,12 @@ class RecordingService {
     if (kIsWeb) {
       return true; // Web doesn't need explicit permission
     }
-    
+
     if (Platform.isAndroid || Platform.isIOS) {
       final status = await Permission.microphone.request();
       return status.isGranted;
     }
-    
+
     return true; // Desktop platforms don't need explicit permission
   }
 
@@ -72,7 +72,8 @@ class RecordingService {
   Future<void> cancelRecording() async {
     if (_isRecording) {
       await _audioRecorder.stop();
-      if (_currentRecordingPath != null && File(_currentRecordingPath!).existsSync()) {
+      if (_currentRecordingPath != null &&
+          File(_currentRecordingPath!).existsSync()) {
         await File(_currentRecordingPath!).delete();
       }
       _isRecording = false;
@@ -84,4 +85,3 @@ class RecordingService {
     _audioRecorder.dispose();
   }
 }
-

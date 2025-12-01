@@ -26,4 +26,3 @@ class DateFormatter {
     return DateFormat('MMM d, y • h:mm a').format(dateTime);
   }
 }
-

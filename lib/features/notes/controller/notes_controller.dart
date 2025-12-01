@@ -54,4 +54,3 @@ class NotesController extends ChangeNotifier {
     return NotesService.getLikedNotes();
   }
 }
-

@@ -54,9 +54,9 @@ class _RecordingScreenState extends State<RecordingScreen> {
     final notesController = context.read<NotesController>();
 
     if (recordingController.audioPath == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No recording to save')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('No recording to save')));
       return;
     }
 
@@ -74,12 +74,12 @@ class _RecordingScreenState extends State<RecordingScreen> {
     recordingController.reset();
 
     if (mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Note saved successfully')),
-      );
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (_) => const HomeScreen()));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Note saved successfully')));
     }
   }
 
@@ -92,9 +92,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Record Voice Note'),
-      ),
+      appBar: AppBar(title: const Text('Record Voice Note')),
       body: Consumer<RecordingController>(
         builder: (context, controller, child) {
           return Center(
@@ -188,7 +186,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (!controller.isRecording && controller.audioPath == null)
+                      if (!controller.isRecording &&
+                          controller.audioPath == null)
                         ElevatedButton.icon(
                           onPressed: () async {
                             try {
@@ -197,6 +196,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                               _startTimer();
                             } catch (e) {
                               if (mounted) {
+                                // ignore: use_build_context_synchronously
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(e.toString())),
                                 );
@@ -221,6 +221,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                               await controller.stopRecording();
                             } catch (e) {
                               if (mounted) {
+                                // ignore: use_build_context_synchronously
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(e.toString())),
                                 );
@@ -282,4 +283,3 @@ class _RecordingScreenState extends State<RecordingScreen> {
     );
   }
 }
-

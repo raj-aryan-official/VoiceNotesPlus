@@ -120,59 +120,56 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: controller.isLoading
                     ? const Center(child: CircularProgressIndicator())
                     : controller.notes.isEmpty
-                        ? Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.mic_none,
-                                  size: 64,
-                                  color: Colors.grey[400],
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  'No notes yet',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.grey[600],
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Tap the mic button to start recording',
-                                  style: TextStyle(
-                                    color: Colors.grey[500],
-                                  ),
-                                ),
-                              ],
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.mic_none,
+                              size: 64,
+                              color: Colors.grey[400],
                             ),
-                          )
-                        : RefreshIndicator(
-                            onRefresh: () => controller.loadNotes(),
-                            child: ListView.builder(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
-                              itemCount: controller.notes.length,
-                              itemBuilder: (context, index) {
-                                final note = controller.notes[index];
-                                return _NoteCard(
-                                  note: note,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => NoteDetailScreen(
-                                          note: note,
-                                        ),
-                                      ),
-                                    ).then((_) => controller.loadNotes());
-                                  },
-                                  onLike: () {
-                                    controller.toggleLike(note.id);
-                                  },
-                                );
+                            const SizedBox(height: 16),
+                            Text(
+                              'No notes yet',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Tap the mic button to start recording',
+                              style: TextStyle(color: Colors.grey[500]),
+                            ),
+                          ],
+                        ),
+                      )
+                    : RefreshIndicator(
+                        onRefresh: () => controller.loadNotes(),
+                        child: ListView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          itemCount: controller.notes.length,
+                          itemBuilder: (context, index) {
+                            final note = controller.notes[index];
+                            return _NoteCard(
+                              note: note,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        NoteDetailScreen(note: note),
+                                  ),
+                                ).then((_) => controller.loadNotes());
                               },
-                            ),
-                          ),
+                              onLike: () {
+                                controller.toggleLike(note.id);
+                              },
+                            );
+                          },
+                        ),
+                      ),
               ),
             ],
           );
@@ -182,11 +179,10 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () async {
           await Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => const RecordingScreen(),
-            ),
+            MaterialPageRoute(builder: (_) => const RecordingScreen()),
           );
           if (mounted) {
+            // ignore: use_build_context_synchronously
             context.read<NotesController>().loadNotes();
           }
         },
@@ -225,10 +221,7 @@ class _StatCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                   ),
                   Text(
                     count.toString(),
@@ -289,10 +282,7 @@ class _NoteCard extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       DateFormatter.formatDateTime(note.createdAt),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                   ],
                 ),
@@ -317,4 +307,3 @@ class _NoteCard extends StatelessWidget {
     );
   }
 }
-

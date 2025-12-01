@@ -37,9 +37,7 @@ class STTService {
     _isInitialized = true;
   }
 
-  Future<String> startListening({
-    Function(String)? onTranscriptUpdate,
-  }) async {
+  Future<String> startListening({Function(String)? onTranscriptUpdate}) async {
     if (!_isInitialized) {
       await initialize();
     }
@@ -81,4 +79,3 @@ class STTService {
   bool get isListening => _speechToText.isListening;
   String get currentTranscript => _currentTranscript;
 }
-

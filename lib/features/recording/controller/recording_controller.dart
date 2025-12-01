@@ -31,7 +31,7 @@ class RecordingController extends ChangeNotifier {
           notifyListeners();
         },
       );
-      
+
       // Then start audio recording
       _audioPath = await _recordingService.startRecording();
       _isRecording = true;
@@ -53,7 +53,7 @@ class RecordingController extends ChangeNotifier {
       if (finalTranscript.isNotEmpty) {
         _transcript = finalTranscript;
       }
-      
+
       // Then stop audio recording
       final path = await _recordingService.stopRecording();
       _isRecording = false;
@@ -87,4 +87,3 @@ class RecordingController extends ChangeNotifier {
     super.dispose();
   }
 }
-

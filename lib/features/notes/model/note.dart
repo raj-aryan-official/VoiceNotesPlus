@@ -26,9 +26,13 @@ class Note extends HiveObject {
     this.isLiked = false,
     DateTime? createdAt,
     int? createdAtMillis,
-  }) : createdAtMillis = createdAtMillis ?? (createdAt?.millisecondsSinceEpoch ?? DateTime.now().millisecondsSinceEpoch);
+  }) : createdAtMillis =
+           createdAtMillis ??
+           (createdAt?.millisecondsSinceEpoch ??
+               DateTime.now().millisecondsSinceEpoch);
 
-  DateTime get createdAt => DateTime.fromMillisecondsSinceEpoch(createdAtMillis);
+  DateTime get createdAt =>
+      DateTime.fromMillisecondsSinceEpoch(createdAtMillis);
 
   Note copyWith({
     int? id,
@@ -43,8 +47,9 @@ class Note extends HiveObject {
       audioPath: audioPath ?? this.audioPath,
       transcript: transcript ?? this.transcript,
       isLiked: isLiked ?? this.isLiked,
-      createdAtMillis: createdAtMillis ?? (createdAt?.millisecondsSinceEpoch ?? this.createdAtMillis),
+      createdAtMillis:
+          createdAtMillis ??
+          (createdAt?.millisecondsSinceEpoch ?? this.createdAtMillis),
     );
   }
 }
-

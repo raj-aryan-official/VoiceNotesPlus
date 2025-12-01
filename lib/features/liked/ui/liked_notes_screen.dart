@@ -12,9 +12,7 @@ class LikedNotesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Liked Notes'),
-      ),
+      appBar: AppBar(title: const Text('Liked Notes')),
       body: Consumer<NotesController>(
         builder: (context, controller, child) {
           final likedNotes = controller.getLikedNotes();
@@ -32,10 +30,7 @@ class LikedNotesScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     'No liked notes yet',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(fontSize: 18, color: Colors.grey[600]),
                   ),
                 ],
               ),
@@ -111,20 +106,14 @@ class _LikedNoteCard extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       DateFormatter.formatDateTime(note.createdAt),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                   ],
                 ),
               ),
               const SizedBox(width: 8),
               IconButton(
-                icon: const Icon(
-                  Icons.favorite,
-                  color: AppTheme.error,
-                ),
+                icon: const Icon(Icons.favorite, color: AppTheme.error),
                 onPressed: onLike,
               ),
               IconButton(
@@ -139,4 +128,3 @@ class _LikedNoteCard extends StatelessWidget {
     );
   }
 }
-

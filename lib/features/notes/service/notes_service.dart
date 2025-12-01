@@ -41,9 +41,7 @@ class NotesService {
   }
 
   static List<Note> getLikedNotes() {
-    return notesBox.values
-        .where((note) => note.isLiked)
-        .toList()
+    return notesBox.values.where((note) => note.isLiked).toList()
       ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
   }
 
@@ -53,8 +51,7 @@ class NotesService {
     }
     final lowerQuery = query.toLowerCase();
     return notesBox.values
-        .where((note) =>
-            note.transcript.toLowerCase().contains(lowerQuery))
+        .where((note) => note.transcript.toLowerCase().contains(lowerQuery))
         .toList()
       ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
   }
@@ -71,7 +68,9 @@ class NotesService {
     if (notesBox.isEmpty) {
       return 1;
     }
-    return notesBox.values.map((note) => note.id).reduce((a, b) => a > b ? a : b) + 1;
+    return notesBox.values
+            .map((note) => note.id)
+            .reduce((a, b) => a > b ? a : b) +
+        1;
   }
 }
-

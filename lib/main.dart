@@ -11,13 +11,13 @@ import 'features/notes/service/notes_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize Hive
   await Hive.initFlutter();
-  
+
   // Initialize Notes Service
   await NotesService.init();
-  
+
   runApp(const MyApp());
 }
 
