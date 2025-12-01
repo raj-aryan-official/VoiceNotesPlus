@@ -1,0 +1,15 @@
+{
+  "name": "voice-notes-plus",
+  "version": "1.0.0",
+  "description": "Voice Notes Plus - Record, transcribe, and manage your voice notes",
+  "scripts": {
+    "build": "flutter build web --release",
+    "dev": "flutter run -d chrome",
+    "install": "flutter pub get"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+
+

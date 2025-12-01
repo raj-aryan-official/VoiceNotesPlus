@@ -58,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             icon: const Icon(Icons.clear),
                             onPressed: () {
                               _searchController.clear();
+                              setState(() {});
                               controller.searchNotes('');
                             },
                           )
@@ -70,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   onChanged: (value) {
+                    setState(() {});
                     controller.searchNotes(value);
                   },
                 ),

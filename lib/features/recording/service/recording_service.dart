@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:record/record.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -12,8 +13,17 @@ class RecordingService {
   String? get currentRecordingPath => _currentRecordingPath;
 
   Future<bool> requestPermissions() async {
-    final status = await Permission.microphone.request();
-    return status.isGranted;
+    // Only request permissions on mobile platforms
+    if (kIsWeb) {
+      return true; // Web doesn't need explicit permission
+    }
+    
+    if (Platform.isAndroid || Platform.isIOS) {
+      final status = await Permission.microphone.request();
+      return status.isGranted;
+    }
+    
+    return true; // Desktop platforms don't need explicit permission
   }
 
   Future<String> startRecording() async {
@@ -30,14 +40,19 @@ class RecordingService {
     final timestamp = DateTime.now().millisecondsSinceEpoch;
     _currentRecordingPath = '${directory.path}/recording_$timestamp.m4a';
 
-    await _audioRecorder.start(
-      const RecordConfig(
-        encoder: AudioEncoder.aacLc,
-        bitRate: 128000,
-        sampleRate: 44100,
-      ),
-      path: _currentRecordingPath!,
-    );
+    try {
+      await _audioRecorder.start(
+        const RecordConfig(
+          encoder: AudioEncoder.aacLc,
+          bitRate: 128000,
+          sampleRate: 44100,
+        ),
+        path: _currentRecordingPath!,
+      );
+    } catch (e) {
+      _currentRecordingPath = null;
+      throw Exception('Failed to start recording: $e');
+    }
 
     _isRecording = true;
     return _currentRecordingPath!;

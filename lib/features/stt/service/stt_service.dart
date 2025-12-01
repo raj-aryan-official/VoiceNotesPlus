@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:io' show Platform;
 
 class STTService {
   final stt.SpeechToText _speechToText = stt.SpeechToText();
@@ -11,9 +12,13 @@ class STTService {
   Future<void> initialize() async {
     if (_isInitialized) return;
 
-    final hasPermission = await Permission.speech.request();
-    if (!hasPermission.isGranted) {
-      throw Exception('Speech recognition permission not granted');
+    // Only request permissions on mobile platforms
+    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
+      final hasPermission = await Permission.speech.request();
+      if (!hasPermission.isGranted) {
+        debugPrint('Speech recognition permission not granted');
+        return;
+      }
     }
 
     final available = await _speechToText.initialize(
@@ -26,7 +31,7 @@ class STTService {
     );
 
     if (!available) {
-      throw Exception('Speech recognition not available');
+      debugPrint('Speech recognition not available');
     }
 
     _isInitialized = true;
